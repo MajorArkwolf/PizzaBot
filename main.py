@@ -11,7 +11,7 @@ load_dotenv(dotenv_path)
 # The trust channels to look for free pizza
 trusted_channel = [718113875203063899, 605754665732407316]
 # The trusted people who will bestow the free pizza
-trusted_people = [184291535221817348, 465038624170180609]
+trusted_people = [184291535221817348, 465038624170180609, 210742437553897473, 223816914974015488, 315047494151176192, 275281624386633728]
 # The bois to tell to claim said free pizza
 the_true_boy = 184291535221817348
 # The key words to look for when pizza is available
@@ -22,7 +22,12 @@ async def notify_the_boi(message):
     user = await client.fetch_user(the_true_boy)
     send_message = discord.Embed(title="Pizza Alert")
     send_message.add_field(name=f"User: {message.author}", value=f"{message.content}", inline=True)
-    await user.send(embed=send_message)
+    new_message = await user.send(embed=send_message)
+    await new_message.add_reaction("✅")
+
+
+async def confirm_the_pizza(message):
+    pass
 
 
 @client.event
@@ -35,6 +40,8 @@ async def on_message(message):
             if any(x.lower() in message.content.lower() for x in key_words):
                 await notify_the_boi(message)
 
+
+@
 
 @client.event
 async def on_ready():
