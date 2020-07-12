@@ -29,7 +29,7 @@ async def notify_the_boi(message):
 async def on_message(message):
     if message.author == client.user:
         return
-    
+
     if any(message.channel.id == x for x in trusted_channel):
         if any(message.author.id == x for x in trusted_people):
             if any(x.lower() in message.content.lower() for x in key_words):
