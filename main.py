@@ -26,8 +26,11 @@ async def notify_the_boi(message):
     await new_message.add_reaction("✅")
 
 
-async def confirm_the_pizza(message):
-    pass
+async def confirm_the_pizza(message, user):
+    channel = client.get_channel(trusted_channel[0])
+    await channel.send(f"{user.name} would like that pizza please! He is coming to get it if that's okay!")
+    await message.channel.send(f"Pizza request sent!")
+    await message.delete()
 
 
 @client.event
@@ -41,7 +44,14 @@ async def on_message(message):
                 await notify_the_boi(message)
 
 
-@
+@client.event
+async def on_reaction_add(reaction, user):
+    if user == client.user:
+        return
+
+    if isinstance(reaction.message.channel, discord.channel.DMChannel):
+        await confirm_the_pizza(reaction.message, user)
+
 
 @client.event
 async def on_ready():
